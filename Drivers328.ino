@@ -4,7 +4,7 @@
 #include <util/delay.h>
 #include "src/uart_v20.h"
 #include "src/twi_v10.h"
-/*
+
 //AT24C32 EEPROM byte iro fv.
 //Csak egy byte-ot irok be, mert adatlap szerint worst case 10ms mir vegez az irassal a memoria, nem lehet folyamatosan irni!
 uint8_t I2C_EEPROM_WriteByte(uint16_t adress, uint8_t data) {
@@ -42,7 +42,7 @@ uint8_t I2C_EEPROM_ReadByte(uint16_t adress, uint8_t lengthOfPackage) {
     return (1);
   }
 }
-*/
+
 int main() {
   DDRB |= (1 << 5);  //LED pin kimenet
   PORTB |= (1 << 5); //LED pin HIGH

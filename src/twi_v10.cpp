@@ -7,7 +7,7 @@
 
 uint8_t twi_t_buffer[TWI_TX_BUFFER_SIZE];
 uint8_t twi_r_buffer[TWI_RX_BUFFER_SIZE];
-/*
+
 //Interrupt vezerelt kodhoz bufferek, transcriver
 CircularBuffer TWI_TXbuff(twi_t_buffer, TWI_TX_BUFFER_SIZE);
 
@@ -20,7 +20,7 @@ bool twi_error = false;           //I2C hiba jelzo flag
 bool twi_bussy = false;  //I2C foglaltsag jelzo flag
 uint8_t tw_address = 0x01;        //I2C altal kezelt cim, iras elott meg kell adni egy valosat
 uint8_t NumberOfRead = 1;         //I2C-n beolvasni kivant byteok szama, olvasas elott atirando valtozo
-*/
+
 void TWI_START(){
     TWCR |=  (1 << TWSTA) | (1 <<TWEN) | (1 << TWINT);  //I2C START KONDICIO, PERIFERIA ENGEDELYEZESE, INTERRUPT ENGEDELYEZES UTOLJARA!
     twi_bussy = true;                                  //I2C ALLAPOGEP FUTASANAK JELZESE
