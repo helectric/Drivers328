@@ -1,8 +1,8 @@
 // Altalaos gyurubuffer kod
 // Nincs kezelve a buffer overflow!!!
 // Hadobas Janos
-// 2020.12.02
-// V1.0
+// 2020.12.26
+// V1.1
 
 //ToDo Inline fv nem mukodik pedig kontrollerre jo lenne !!!
 #include "CircularBuffer.h"
@@ -30,11 +30,11 @@ void CircularBuffer::writeByte(uint8_t* volatile data)  // Gyurubufferbol kifele
   }
   // }
   // A kovetkezo sor valoszinuleg nyer a futasidoben a deklaracioban megadott volatile-hoz kepes. (Ezt a generalt kod meretebol kovetkeztettem.)
-  //_asm__ __volatile__ ("nop"); //Berak egy ures utasitas assemblyben. E nelkul a fordito kioptimalizalja ezt a fv.-t ha interrupt hivassal toltom fel.
+  //__asm__ __volatile__ ("nop"); //Berak egy ures utasitas assemblyben. E nelkul a fordito kioptimalizalja ezt a fv.-t ha interrupt hivassal toltom fel.
   return;
 }
 
-void CircularBuffer::readByte(uint8_t data)  //Gyurubufferbe beolvasas, egy byteot beemel a bufferbe. Tuliras nincs itt kezelve!
+void CircularBuffer::readByte(uint8_t volatile data)  //Gyurubufferbe beolvasas, egy byteot beemel a bufferbe. Tuliras nincs itt kezelve!
 {
   *write_ptr = data;    //Legyen a gyurubuffer iro pointere altal mutatott ertek az UDR0 regiszter erteke
   if (write_ptr < &buffer[buffer_size - 1 ])   //Ha nem erte meg el az iro pointer az utolso memoriacimet a tombben
@@ -61,7 +61,12 @@ bool CircularBuffer::isEmpty()    //Teszteli, hogy ures-e a gyurubuffer
   //Megmondja, hogy ures-e a gyurubuffer
 }
 
-void CircularBuffer::read(const uint8_t* data_arr, uint8_t arr_size)  //Gyurubufferbe beolvasas, egy tombot tesz be a bufferbe. Tuliras nincs itt kezelve!
+uint8_t CircularBuffer::dataLenght()
+{
+  return(write_ptr - read_ptr);
+}
+
+void CircularBuffer::read(const uint8_t* volatile data_arr, uint8_t arr_size)  //Gyurubufferbe beolvasas, egy tombot tesz be a bufferbe. Tuliras nincs itt kezelve!
 {
   for (uint8_t i = 0; i < arr_size; i++)     //masolas a gyuru bufferbe, ciklus amely vegigfut a bemeneti tomb elemein
   {
