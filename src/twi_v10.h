@@ -32,68 +32,19 @@
 #endif /* TWI_TX_BUFFER_SIZE */
 
 //Interrupt vezerelt kodhoz bufferek, transcriver
-// #ifndef twi_t_buffer
-// #define twi_t_buffer
-// extern uint8_t twi_t_buffer[TWI_TX_BUFFER_SIZE];
-// #endif /* twi_t_buffer */
-
-// #ifndef TWI_TXbuff
-// #define TWI_TXbuff
-// extern CircularBuffer TWI_TXbuff;
-// #endif /* TWI_TXbuff */
+extern volatile CircularBuffer TWI_TXbuff;
 
 //receiver
-// #ifndef twi_r_buffer
-// #define twi_r_buffer
-// extern uint8_t twi_r_buffer[TWI_RX_BUFFER_SIZE];
-// #endif /* twi_r_buffer */
-
-// #ifndef TWI_RXbuff
-// #define TWI_RXbuff
-// extern CircularBuffer TWI_RXbuff;
-// #endif /* TWI_RXbuff */
+extern volatile CircularBuffer TWI_RXbuff;
 
  //Globalis valtozok az I2C kezelesehez
-
-// #ifndef twi_mode_flag
-// #define twi_mode_flag
-// extern bool twi_mode_flag;    //I2C master iras/olvasas mod valtas TW_WRTIE = 0, TW_READ = 1
-// #endif
-
-// #ifndef twi_error
-// #define twi_error
-// extern bool twi_error;           //I2C hiba jelzo flag
-// #endif
-
-// #ifndef twi_bussy
-// #define twi_bussy
-// extern bool volatile twi_bussy;  //I2C foglaltsag jelzo flag
-// #endif
-
-// #ifndef tw_address
-// #define tw_address
-// extern uint8_t tw_address;        //I2C altal kezelt cim, iras elott meg kell adni egy valosat
-// #endif
-
-// #ifndef NumberOfRead
-// #define NumberOfRead
-// extern uint8_t NumberOfRead;         //I2C-n beolvasni kivant byteok szama, olvasas elott atirando valtozo
-// #endif
-
-//Interrupt vezerelt kodhoz bufferek, transcriver
-extern CircularBuffer TWI_TXbuff;
-
-//receiver
-extern CircularBuffer TWI_RXbuff;
-
- //Globalis valtozok az I2C kezelesehez
-extern bool twi_mode_flag;    //I2C master iras/olvasas mod valtas TW_WRTIE = 0, TW_READ = 1
-extern bool twi_error;           //I2C hiba jelzo flag
-extern bool twi_bussy;  //I2C foglaltsag jelzo flag
+extern volatile bool twi_error;           //I2C hiba jelzo flag
+extern volatile bool twi_bussy;  //I2C foglaltsag jelzo flag, a volatile fontos, csak az interruptban modosul!
+extern volatile bool twi_mode_flag;    //I2C master iras/olvasas mod valtas TW_WRTIE = 0, TW_READ = 1
 extern uint8_t tw_address;        //I2C altal kezelt cim, iras elott meg kell adni egy valosat
 extern uint8_t NumberOfRead;         //I2C-n beolvasni kivant byteok szama, olvasas elott atirando valtozo
 
-inline void TWI_START();
+void TWI_START();          //I2C start condition kuldese
 void TWI_INIT();                  //I2C periferia alapbeallitasai
 
 // Megjegyzes: ezek inkabb csak megvalositasi otletadoak egyeb eszkoz specifikus driverekhez
