@@ -18,7 +18,7 @@ class CircularBuffer
     void writeByte(uint8_t* data);		//Adatok bufferbol torteno kiirasara szolgalo tagfv.
     bool isEmpty();						//Teszteli ures-e a buffer
     void read(const uint8_t* data_arr, uint8_t arr_size);	// Tomb bufferbe torteno beirasara szolgalo tagfv.
-    uint8_t CircularBuffer::dataLenght();  //Visszaadja a read es a write pointer kulonbseget (byteok szama)
+    uint8_t dataLenght();  //Visszaadja a read es a write pointer kulonbseget (byteok szama)
 
   private:    //Belso valtozok
     uint8_t* buffer;

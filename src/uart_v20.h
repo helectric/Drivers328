@@ -36,5 +36,5 @@ void USART_Transmit_string(const char* string); //String kikuldese UART-on
 void USART_Transmit_byte(char data);  //Egy bíte kikuldese UART-on
 void USART_Tr_UInt16(uint16_t data);  //16 bites int kuldese UART-on ketes hatekonysagu...
 uint8_t USART_Receive_byte(); //Egy byte fogadasa UART-on
-
+uint8_t USART_Received();    //USART receive buffer uressegenek tesztelese
 #endif /* UART_V20_H*/

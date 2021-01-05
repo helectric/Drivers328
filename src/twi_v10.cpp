@@ -19,7 +19,7 @@ volatile bool twi_error = false;           //I2C hiba jelzo flag
 volatile bool twi_bussy = false;  //I2C foglaltsag jelzo flag
 volatile bool twi_mode_flag = TW_WRITE;    //I2C master iras/olvasas mod valtas TW_WRTIE = 0, TW_READ = 1
 uint8_t tw_address = 0x01;        //I2C altal kezelt cim, iras elott meg kell adni egy valosat
-uint8_t NumberOfRead = 1;         //I2C-n beolvasni kivant byteok szama, olvasas elott atirando valtozo
+volatile uint8_t NumberOfRead = 1;         //I2C-n beolvasni kivant byteok szama, olvasas elott atirando valtozo
 
 inline void TWI_START(){
     TWCR |=  (1 << TWSTA) | (1 <<TWEN) | (1 << TWINT);  //I2C START KONDICIO, PERIFERIA ENGEDELYEZESE, INTERRUPT ENGEDELYEZES UTOLJARA!
@@ -94,6 +94,7 @@ ISR(TWI_vect) {
       TWDR = ((tw_address << 1) + twi_mode_flag);  //Valassz mukodesi modot... es kuldj cimet
       TWCR &= ~(1 << TWSTA);                       //Start kondicio torlese kotelezo miutan kikuldte, egyebkent nem fog mukodni, folyamatosan ujra startot fog majd kuldeni...
       TWINT_CLEAR();                               //Periferia interrupt flag torlese, folyamat folytatasa
+      PORTB |= (1 << 5); //Debug!!!
       break;
     case TW_REP_START:                             //Ismetelt Start kondicio eseten
       TWDR = ((tw_address << 1) + twi_mode_flag);  //Valassz mukodesi modot... es kuldj cimet
@@ -154,6 +155,7 @@ ISR(TWI_vect) {
       //Megj: itt lehetne foglalkozni az RX buffer overflow-al
       if (TWI_RXbuff.dataLenght() == (NumberOfRead - 1)) {  //Ha az olvasasnal az utolso byte-ot olvassa be, akkor legkozelebb NACK-ot kell valaszolni
         TWCR &= ~(1 << TWEA);   //ACK valasz atallitasa NACK-ra
+        PORTB &= ~(1 << 5); //Debug!!!
       }
       TWINT_CLEAR();
       break;

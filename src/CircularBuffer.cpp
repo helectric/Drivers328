@@ -63,7 +63,12 @@ bool CircularBuffer::isEmpty()    //Teszteli, hogy ures-e a gyurubuffer
 
 uint8_t CircularBuffer::dataLenght()
 {
-  return(write_ptr - read_ptr);
+  if(write_ptr > read_ptr){
+    return(write_ptr - read_ptr);
+  }
+  else{
+    return((write_ptr - &buffer[0]) + (&buffer[buffer_size] - read_ptr));
+  }
 }
 
 void CircularBuffer::read(const uint8_t* volatile data_arr, uint8_t arr_size)  //Gyurubufferbe beolvasas, egy tombot tesz be a bufferbe. Tuliras nincs itt kezelve!

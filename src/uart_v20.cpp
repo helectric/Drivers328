@@ -89,3 +89,12 @@ uint8_t USART_Receive_byte() {
     return (0);
   }
 }
+
+uint8_t USART_Received(){
+  if(!RXbuff.isEmpty()){
+    return(1);
+  }
+  else{
+    return(0);
+  }
+}

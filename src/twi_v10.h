@@ -42,7 +42,7 @@ extern volatile bool twi_error;           //I2C hiba jelzo flag
 extern volatile bool twi_bussy;  //I2C foglaltsag jelzo flag, a volatile fontos, csak az interruptban modosul!
 extern volatile bool twi_mode_flag;    //I2C master iras/olvasas mod valtas TW_WRTIE = 0, TW_READ = 1
 extern uint8_t tw_address;        //I2C altal kezelt cim, iras elott meg kell adni egy valosat
-extern uint8_t NumberOfRead;         //I2C-n beolvasni kivant byteok szama, olvasas elott atirando valtozo
+extern volatile uint8_t NumberOfRead;         //I2C-n beolvasni kivant byteok szama, olvasas elott atirando valtozo
 
 void TWI_START();          //I2C start condition kuldese
 void TWI_INIT();                  //I2C periferia alapbeallitasai
